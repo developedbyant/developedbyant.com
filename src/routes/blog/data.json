@@ -1,0 +1,58 @@
+{
+    "Posts": [
+        {
+            "layout": "Posts",
+            "title": "Deploy svelteKit app",
+            "description": "How deploy a svelte kit app to a Ubuntu server.",
+            "image": "https://imageio.forbes.com/blogs-images/jasonevangelho/files/2018/07/ubuntu-logo.jpg",
+            "href": "/blog/deploy-sveltekit-app",
+            "new": false,
+            "headers": [
+                {
+                    "id": "how-deploy-a-svelte-kit-app-to-a-ubuntu-server",
+                    "text": "How deploy a svelte kit app to a Ubuntu server."
+                }
+            ]
+        },
+        {
+            "title": "How To Install Nginx on Ubuntu 22.04",
+            "description": "Learn how to install Nginx on a Ubuntu server version 22.04 step by step.",
+            "image": "https://kinsta.com/wp-content/uploads/2018/03/what-is-nginx-1024x512.png",
+            "layout": "Posts",
+            "href": "/blog/install-nginx-ubuntu-22-04",
+            "new": false,
+            "headers": [
+                {
+                    "id": "how-to-solve-remote-host-identification-has-changed",
+                    "text": "How to solve REMOTE HOST IDENTIFICATION HAS CHANGED."
+                },
+                {
+                    "id": "step-1",
+                    "text": "Step 1"
+                },
+                {
+                    "id": "step-2",
+                    "text": "Step 2"
+                },
+                {
+                    "id": "check-your-ip-to-make-sure-nginx-is-running",
+                    "text": "Check your IP to make sure Nginx is running"
+                }
+            ]
+        },
+        {
+            "title": "Deploy svelteKit app",
+            "description": "How to solve REMOTE HOST IDENTIFICATION HAS CHANGED when using ssh.",
+            "image": "https://imageio.forbes.com/blogs-images/jasonevangelho/files/2018/07/ubuntu-logo.jpg",
+            "layout": "Posts",
+            "href": "/blog/solve-ssh-key",
+            "new": false,
+            "headers": [
+                {
+                    "id": "how-to-solve-remote-host-identification-has-changed",
+                    "text": "How to solve REMOTE HOST IDENTIFICATION HAS CHANGED."
+                }
+            ]
+        }
+    ]
+}

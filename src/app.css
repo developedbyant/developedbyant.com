@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+html{
+    scroll-behavior: smooth;
+}
+:root{
+    /* app */
+    --max-width:1200px;
+    --app-bg:linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
+    --app-fb:#444958;
+    --blur-bg: #bebebe7d;
+    --header-color:#d9d9d9;
+    --text-color:#a1a1aa;
+    --border-color:#ffffff0a;
+    --icon-color: #dbdbdb;
+    --shadow:rgba(0,0,0,5%);
+    --main-color:#38bdf8;
+    --second-color:#38bdf8;
+    --error-bg: #cc7d7d;
+    --error-color: #fff;
+    /* search */
+    --search-bg:#27282D;
+    --search-color:#b3b3b3;
+    /* nav */
+    --nav-bg:#4e556d;
+    --nav-link-color:#d8dade;
+    --nav-link-active-color:#d8dade;
+    --nav-link-bg:#2b334e;
+    --nav-link-hover-color:#272728;
+    /* card */
+    --card-bg:#1414147d;
+    --card-fb:#27282D;
+    --card-header-color:#ffffff;
+    --card-text-color:#a0a0a0;
+    /* data label */
+    --data-label-bg:#383838;
+    --data-label-color:#cfcfcf;
+    /* button */
+    --button-bg: #38bdf8;
+    --button-color:#fff;
+    /* footer */
+    --footer-bg: #1c2133;
+    --footer-text-color:#ffff;
+    --footer-link-color:#ffff;
+    /* code */
+    --code-bg:var(--app-fb);
+    --code-text-color:var(--text-color);
+    --code-line-added-bg:#4d8aac40;
+    --code-line-removed-bg:#917a7a52;
+}
+
+/* light mode */
+.app.light{
+    --app-bg: linear-gradient(to top, #dfe9f3 0%, white 100%);
+    --icon-color: #787878;
+    --border-color: #f4f4f4;
+    --app-fb: #fafafa;
+    --nav-bg: #efefef;
+    --nav-link-color: #7d7d7d;
+    --nav-link-bg: #080808;
+    --header-color: #363636;
+    --text-color: #969696;
+    --card-bg:#fff;
+    --card-header-color:#868686;
+    --footer-bg:rgba(0,0,0,5%);
+    --footer-text-color:#6b6b6b;
+}
