@@ -1,12 +1,52 @@
 import * as clack from "@clack/prompts";
 import { execSync } from "child_process"
+import fs from "fs"
 const CONFIG = { selectedApp:"",dev:false }
 const APPS:AppData = {
     "developedbyant.com":{
         port:3000,
         local:"~/dev/projects/developedbyant.com",
         prod:"/var/www/developedbyant.com",
+    },
+    "kitdocs.dev":{
+        port:3001,
+        local:"~/dev/projects/kitdocs.dev",
+        prod:"/var/www/kitdocs.dev",
     }
+}
+
+/** Add site nginx server block */
+const addToNginx = (appData:AppData)=>{
+    /** project base dir */
+    const base = CONFIG['dev'] ? './testNginx' : '/etc/nginx'
+    const [domain,domainData] = [Object.keys(appData)[0],Object.values(appData)[0]]
+    const nginxSitesPath = `${base}/sites-available`
+    const nginxSites = fs.readdirSync(nginxSitesPath).filter(site=>(site.endsWith(".com")||site.endsWith(".dev")))
+     // if app does not exists in nginx, create server block and link it
+    if(nginxSites.includes(domain)) return
+    // else create server block
+    const serverBlock = `server {
+    server_name ${domain} www.${domain};
+    location / {
+        proxy_pass http://localhost:${domainData.port};
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        include proxy_params; 
+    }
+}`
+    // create server block file
+    fs.writeFileSync(`${base}/sites-available/${domain}`,serverBlock)
+    clack.log.info("Nginx server block created")
+    // to avoid error, stop function when dev mode
+    if(CONFIG['dev']) return
+    // add site to sites enabled
+    execSync(`sudo ln -s ${base}/sites-available/${domain} ${base}/sites-enabled/`)
+    clack.log.info(`Enabled ${domain}`)
+    // restart nginx
+    execSync(`sudo systemctl restart nginx`)
+    clack.log.info("Restarted nginx")
+    clack.log.success(`App:${CONFIG.selectedApp} was added to nginx`)
 }
 
 /** Capitalize string */
@@ -124,8 +164,10 @@ while(true){
         // start app
         execSync(`PORT=${appData.port} pm2 start ${CONFIG.dev?appData.local:appData.prod}/build/index.js --name=${CONFIG.selectedApp} ${startOptions.join(" ")}`)
         clack.log.success(`App:${CONFIG.selectedApp} was started`)
+        // add site to nginx
+        addToNginx({ [selectApp]:APPS[selectApp] })
     }
-    // start app
+    // restart app
     else if(actionToRun==="restart"){
         // if app is not running show error and skip loop
         if(!runningAppData){
@@ -170,8 +212,8 @@ type ActionToRun = "status"|"restart"|"start"|"stop"|"delete"
 type AppData = {
     [key:string]:{
         port:number
-        local:string
-        prod:string
+        local:`${string}.${string}`
+        prod:`${string}.${string}`
     }
 }
 type Running = {
