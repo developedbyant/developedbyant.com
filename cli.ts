@@ -1,7 +1,7 @@
 import * as clack from "@clack/prompts";
 import { execSync } from "child_process"
 import fs from "fs"
-const CONFIG = { selectedApp:"",dev:false }
+const CONFIG = { selectedApp:"",dev:true }
 const APPS:AppData = {
     "developedbyant.com":{
         port:3000,
@@ -10,8 +10,13 @@ const APPS:AppData = {
     },
     "kitdocs.dev":{
         port:3001,
-        local:"~/dev/projects/kitdocs.dev",
+        local:"~/dev/projects/kit-docs",
         prod:"/var/www/kitdocs.dev",
+    },
+    "svelteblocks.dev":{
+        port:3002,
+        local:"~/dev/projects/svelte-blocks",
+        prod:"/var/www/svelteblocks.dev",
     }
 }
 
@@ -157,9 +162,11 @@ while(true){
             startOptions = startOptions.map(data=>data==="-i"?`-i ${clustersNum}`:data)
         }
         const appData = APPS[CONFIG.selectedApp]
-        // build app running npm run build
+        // build app running bun run build
+        spinner.start("Running bun install")
+        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && bun install && cd ${process.cwd()}`)
         spinner.start("Building app")
-        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && npm run build && cd ${process.cwd()}`)
+        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && bun run build && cd ${process.cwd()}`)
         spinner.stop("App was build app")
         // start app
         execSync(`PORT=${appData.port} pm2 start ${CONFIG.dev?appData.local:appData.prod}/build/index.js --name=${CONFIG.selectedApp} ${startOptions.join(" ")}`)
@@ -174,10 +181,12 @@ while(true){
             clack.log.error(`App:${CONFIG.selectedApp} is not running`)
             continue
         }
-        // build app running npm run build
+        // build app running bun run build
         const appData = APPS[CONFIG.selectedApp]
+        spinner.start("Running bun install")
+        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && bun install && cd ${process.cwd()}`)
         spinner.start("Building app")
-        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && npm run build && cd ${process.cwd()}`)
+        execSync(`cd ${CONFIG.dev?appData.local:appData.prod} && bun run build && cd ${process.cwd()}`)
         spinner.stop("App was build app")
         // else restart app
         execSync(`pm2 restart ${CONFIG.selectedApp}`)
@@ -212,7 +221,7 @@ type ActionToRun = "status"|"restart"|"start"|"stop"|"delete"
 type AppData = {
     [key:string]:{
         port:number
-        local:`${string}.${string}`
+        local:string
         prod:`${string}.${string}`
     }
 }
