@@ -1,7 +1,7 @@
 import * as clack from "@clack/prompts";
 import { execSync } from "child_process"
 import fs from "fs"
-const CONFIG = { selectedApp:"",dev:true }
+const CONFIG = { selectedApp:"",dev:false }
 const APPS:AppData = {
     "developedbyant.com":{
         port:3000,
